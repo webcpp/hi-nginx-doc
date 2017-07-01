@@ -20,11 +20,14 @@
 \item boost-devel
 \item luajit-devel
 \end{itemize}
-假设用户使用的\texttt{Linux}是\texttt{CentOS}，那么很简单，执行:
+假设用户使用的\texttt{Linux}是\texttt{CentOS}，那么很简单，执行：
 \begin{lstlisting}
 sudo yum install gcc gcc-c++ make pcre-devel zlib-devel openssl-devel hiredis-devel python-devel boost-devel luajit-devel
 \end{lstlisting}
-即可。
+即可。如果用户使用的是\texttt{Ubuntu}，请执行：
+\begin{lstlisting}
+sudo apt-get install build-essential libpcre3-dev zlib1g-dev libssl-dev libhiredis-dev python-dev libboost-all-dev libluajit-5.1-dev 
+\end{lstlisting}
 
 安装以上依赖软件之后，解压缩\texttt{hi-nginx}源码包。进入源码目录后，会看到一个演示性的安装脚本\texttt{install-demo.sh}。如果用户仅仅是尝试\texttt{hi-nginx}，可以直接运行该该脚本。它的内容很简单：
 \begin{lstlisting}
