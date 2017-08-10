@@ -19,6 +19,7 @@
 \item nginx-rtmp-module
 \item nchan
 \item echo-nginx-module
+\item nginx-upload-module
 \end{itemize}
 它们都放在\path{3rd}目录中，需要时，只需\texttt{--add-module=3rd/xxx}即可。例如：
 \begin{lstlisting}
@@ -44,7 +45,8 @@
                 --add-module=3rd/xss-nginx-module-0.05 \
                 --add-module=3rd/nginx-push-stream-module-0.5.2 \
                 --add-module=3rd/nchan-1.1.6 \
-                --add-module=3rd/nginx-rtmp-module-1.1.7.10
+                --add-module=3rd/nginx-rtmp-module-1.1.7.10 \
+                --add-module=3rd/nginx-upload-module-2.255
 \end{lstlisting}
 如果用户有需要集成的其他模块，最好也放在\path{3rd}目录中，便于统一管理。然后，接着上面的配置脚本，\texttt{--add-module=3rd/xxx}，依样画葫芦即可。
 
