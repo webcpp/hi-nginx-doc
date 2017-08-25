@@ -214,6 +214,13 @@ public class jhello implements hi.servlet {
 hi_java_classpath "-Djava.class.path=.:/home/centos7/nginx/java:/home/centos7/nginx/java/hi-nginx-java.jar";
 \end{lstlisting}
 \path{hi-nginx-java.jar}是必须添加的。其他jar文件可以自行添加。
+\subsubsection{hi_java_options}
+这个指令可指定虚拟机初始化参数，默认值为
+
+\begin{lstlisting}
+-server -d64 -Xmx3G -Xms3G -Xmn768m -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+UseNUMA -XX:+CMSParallelRemarkEnabled -XX:MaxTenuringThreshold=15 -XX:MaxGCPauseMillis=30 -XX:GCPauseIntervalMillis=150 -XX:+UseAdaptiveGCBoundary -XX:-UseGCOverheadLimit -XX:+UseBiasedLocking -XX:SurvivorRatio=8 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -Dfml.ignorePatchDiscrepancies=true -Dfml.ignoreInvalidMinecraftCertificates=true -XX:+UseFastAccessorMethods -XX:+UseCompressedOops -XX:+OptimizeStringConcat -XX:+AggressiveOpts -XX:ReservedCodeCacheSize=2048m -XX:+UseCodeCacheFlushing -XX:SoftRefLRUPolicyMSPerMB=10000 -XX:ParallelGCThreads=10
+\end{lstlisting}
+
 \subsubsection{hi_java_servlet_cache_expires}
 这个指令负责安排\texttt{servlet}缓存时间，默认300秒，使用它可以周期性的自动更新\texttt{servlet class}。如果你修改了\texttt{servlet}，更新安装后可以实现自动更新，而无需\texttt{reload}。
 \subsubsection{hi_java_servlet_cache_size}
