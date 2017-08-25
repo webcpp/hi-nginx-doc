@@ -3,7 +3,7 @@
 \texttt{hi-project}是一个辅助脚本，安装在\path	{/home/centos7/nginx/hi}目录中。它的用途是为用户创建“起步”代码模板。运行它可以使用三个选项，依次是：
 \begin{itemize}
 \item 工程名，可选，默认\texttt{demo}
-\item 工程类型，可选，支持\texttt{cpp}，\texttt{python}和\texttt{lua}，默认\texttt{cpp}
+\item 工程类型，可选，支持\texttt{cpp}，\texttt{python}，\texttt{lua}和\texttt{java}，默认\texttt{cpp}
 \item \texttt{hi-nginx}安装路径，可选，默认\path{/home/centos7/nginx}
 \end{itemize}
 用户可以通过\texttt{-h}或者\texttt{--help}参看使用说明。
@@ -67,6 +67,7 @@ hi_res.status(200)
 hi_res.content('hello,python')
 \end{lstlisting}
 用户可以把其他\texttt{python}类型的\texttt{web}应用全放在\path{python}目录下，它们都能被正确安装。
+
 \subsubsection{lua}
 使用\texttt{hi-project}脚本创建一个\texttt{lua}工程，名为\texttt{lua}：
 \begin{lstlisting}
@@ -79,6 +80,29 @@ hi_res:content('hello,lua')
 \end{lstlisting}
 用户可以把其他\texttt{lua}类型的\texttt{web}应用全放在\path{lua}目录下，它们都能被正确安装。
 
+\subsubsection{java}
+使用\texttt{hi-project}脚本创建一个\texttt{jhello}工程，名为\texttt{jhello}：
+\begin{lstlisting}
+/home/centos7/nginx/hi/hi-project jhello java /home/centos7/nginx
+\end{lstlisting}
+最后一个参数是可省的。\texttt{hi-project}会创建一个名为\path{jhello}的目录，并在该目录中创建一个是\path{Makefile}。还会创建一个名为\path{hi}的子目录，该目录下会有一个名为\path{jhello.java}的源文件。前者的作用如上。后者很简单：
+\begin{lstlisting}
+package hi;
+
+public class jhello implements hi.servlet {
+
+    public jhello() {
+
+    }
+
+    public void handler(hi.request req, hi.response res) {
+        res.status = 200;
+        res.content ="hello,world"
+
+    }
+}
+\end{lstlisting}
+用户可以把其他\texttt{java}类型的\texttt{web}应用全放在\path{hi}目录下，它们都能被正确安装。
 
 \subsection{请求类}
 \texttt{hi-nginx}把请求分解为以下几个部分：
@@ -184,6 +208,30 @@ hi_res:content('hello,lua')
 这个指令负责运行\texttt{lua}内容块
 \subsubsection{hi_lua_script}
 这个指令负责运行\texttt{lua}脚本，它接受一个参数，可指定查找脚本的目录。
+\subsubsection{hi_java_classpath}
+这个指令负责为虚拟机设置\texttt{CLASSPATH}，一般的写法是：
+\begin{lstlisting}
+hi_java_classpath "-Djava.class.path=.:/home/centos7/nginx/java:/home/centos7/nginx/java/hi-nginx-java.jar";
+\end{lstlisting}
+\path{hi-nginx-java.jar}是必须添加的。其他jar文件可以自行添加。
+\subsubsection{hi_java_servlet_cache_expires}
+这个指令负责安排\texttt{servlet}缓存时间，默认300秒，使用它可以周期性的自动更新\texttt{servlet class}。如果你修改了\texttt{servlet}，更新安装后可以实现自动更新，而无需\texttt{reload}。
+\subsubsection{hi_java_servlet_cache_size}
+这个指令可指定\texttt{servlet}缓存容器大小。
+\subsubsection{hi_java_version}
+这个指令可指定虚拟机版本，默认是8，即\texttt{java}8。可以指定6,即\texttt{java}6。
+\subsubsection{hi_java_servlet}
+这个指令负责调用\texttt{servlet}类。比如，
+\begin{lstlisting}
+hi_java_servlet  hi/jhello;
+\end{lstlisting}
+它表示调用的是\texttt{hi-nginx}安装目录下的\path{java/hi/jhello.class}。
+
+
+
+
+
+
 
 
 

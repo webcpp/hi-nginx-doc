@@ -19,6 +19,7 @@
 \item python-devel
 \item boost-devel
 \item luajit-devel
+\item jdk
 \end{itemize}
 假设用户使用的\texttt{Linux}是\texttt{CentOS}，那么很简单，执行：
 \begin{lstlisting}
@@ -27,6 +28,14 @@ sudo yum install gcc gcc-c++ make pcre-devel zlib-devel openssl-devel hiredis-de
 即可。如果用户使用的是\texttt{Ubuntu}，请执行：
 \begin{lstlisting}
 sudo apt-get install build-essential libpcre3-dev zlib1g-dev libssl-dev libhiredis-dev python-dev libboost-all-dev libluajit-5.1-dev 
+\end{lstlisting}
+
+关于\texttt{java}环境的安装，推荐采用\texttt{sdkman}来进行：
+\begin{lstlisting}
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk selfupdate force
+sdk install java
 \end{lstlisting}
 
 安装以上依赖软件之后，解压缩\texttt{hi-nginx}源码包。进入源码目录后，会看到一个演示性的安装脚本\texttt{install-demo.sh}。如果用户仅仅是尝试\texttt{hi-nginx}，可以直接运行该该脚本。它的内容很简单：
@@ -66,6 +75,10 @@ install demo.conf /home/centos7/nginx/conf
         hi_session_expires 300s;	#http session 过期时间
         hi_redis_host 127.0.0.1;	#redis 主机
         hi_redis_port 6379;		#redis 端口
+        hi_java_classpath "-Djava.class.path=.:/home/centos7/nginx/java:/home/centos7/nginx/java/hi-nginx-java.jar:/home/centos7/nginx/java/freemarker.jar";   #java classpath
+        hi_java_servlet_cache_expires 300s;  #java servlet缓存过期时间
+        hi_java_servlet_cache_size 10; #java servlet缓存容器大小
+        hi_java_version 8; #java 版本
         
         expires 10s;
         location = /hello {
@@ -120,6 +133,14 @@ install demo.conf /home/centos7/nginx/conf
             hi_session_expires 30s;
             hi_python_script python;											#运行python脚本
 	}
+	
+	location ~ \.do$ {
+            rewrite ^/(.*)\.do$ /$1.py break;
+            hi_need_cache off;
+            hi_need_headers on;
+            hi_need_cookies on;
+            hi_python_script python;
+        }
 
 	location = /luaecho {
             hi_need_cache off;
@@ -133,6 +154,12 @@ install demo.conf /home/centos7/nginx/conf
             hi_need_session on;
             hi_session_expires 30s;
             hi_lua_script lua;													#运行lua脚本
+	}
+	
+	location = /jhello {
+            hi_need_cache off;
+            hi_java_servlet_cache_expires 60s;
+            hi_java_servlet hi/jhello;											#调用hi/jhello类
 	}
 
         location / {
