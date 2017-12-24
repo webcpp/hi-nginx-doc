@@ -19,7 +19,8 @@
 \item python-devel
 \item boost-devel
 \item luajit-devel
-\item java 8
+\item java 1+
+\item php7+
 \end{itemize}
 假设用户使用的\texttt{Linux}是\texttt{CentOS}，那么很简单，执行：
 \begin{lstlisting}
@@ -154,6 +155,14 @@ install demo.conf /home/centos7/nginx/conf
             hi_need_session on;
             hi_session_expires 30s;
             hi_lua_script lua;													#运行lua脚本
+	}
+	
+	location ~ \.php$ {
+            hi_need_cache off;
+            hi_need_headers on;
+            hi_need_session on;
+            hi_session_expires 30s;
+            hi_php_script php;													#运行php脚本
 	}
 	
 	location = /jhello {

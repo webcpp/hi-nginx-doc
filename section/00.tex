@@ -1,10 +1,10 @@
 \section{导言}
-\texttt{hi-nginx}既是\texttt{web server}，也是\texttt{application server}。这是它区别于\texttt{nginx}的最主要的特点。作为前者，它跟\texttt{nginx}一样，可作静态资源服务器，可作反向代理服务器，还可作负载均衡服务器，一切都一如\texttt{nginx}。作为后者，它让\texttt{c++}程序员，\texttt{python} 程序员，以及\texttt{lua}程序员和\texttt{java}程序员写的\texttt{web application}完全运行在\texttt{nginx}服务器内部，从而可以轻松提供高性能的、支持大并发的\texttt{web application}。
+\texttt{hi-nginx}既是\texttt{web server}，也是\texttt{application server}。这是它区别于\texttt{nginx}的最主要的特点。作为前者，它跟\texttt{nginx}一样，可作静态资源服务器，可作反向代理服务器，还可作负载均衡服务器，一切都一如\texttt{nginx}。作为后者，它让\texttt{c++}程序员，\texttt{python} 程序员，\texttt{lua}程序员，\texttt{php} 程序员和\texttt{java}程序员写的\texttt{web application}完全协同运行在\texttt{nginx}服务器内部，从而可以轻松提供高性能的、支持大并发的\texttt{web application}。
 
-为什么\texttt{hi-nginx}要同时支持四种编程语言？其原因有三。第一，我最常用的编程语言是\texttt{c++}，它必须被支持；而且它非常快，非常适合处理“热点”业务。第二，\texttt{python}库资源极为丰富，非常适合处理常规业务，几乎没有它未曾涉猎的开发领域，因而它能够极大地加快开发速度。第三，\texttt{lua}比\texttt{python}快，但是库资源不及后者，支持它是为了方便处理那些介于"热点"业务和“常规”业务之间的业务。第四，\texttt{java}在web领域有很深的积淀，支持它虽非必要却不失为有趣的选择。
+为什么\texttt{hi-nginx}要同时支持多种编程语言？其原因有三。第一，我最常用的编程语言是\texttt{c++}，它必须被支持；而且它非常快，非常适合处理“热点”业务。第二，\texttt{python}库资源极为丰富，非常适合处理常规业务，几乎没有它未曾涉猎的开发领域，因而它能够极大地加快开发速度。第三，\texttt{lua}比\texttt{python}快，但是库资源不及后者，支持它是为了方便处理那些介于"热点"业务和“常规”业务之间的业务。第四，\texttt{java}和\texttt{php}在web领域有很深的积淀，支持它虽非必要却不失为有趣而明智的选择。
 
-因此，使用\texttt{hi-nginx}，让其发挥出最大潜能，需要开发者同时熟知\texttt{c++}、\texttt{python}、\texttt{lua}、\texttt{java} 四种编程语言。这并不是非常高的要求。实际上，这四种语言都非常易学易用，尽管并不是所有人都认同这一点。当然，用户只熟知其中的某一种编程语言也无妨——即便是对\texttt{python}程序员而言，\texttt{hi-nginx}	也能提供非常高效的并发处理能力。
+因此，使用\texttt{hi-nginx}，让其发挥出最大潜能，需要开发者同时熟知\texttt{c++}、\texttt{python}、\texttt{lua}、\texttt{java} 、\texttt{php}五种编程语言。这并不是非常高的要求。实际上，这五种语言都非常易学易用，尽管并不是所有人都认同这一点。在较大的开发团队里，不同队员熟悉不同语言是很寻常的事情，而且他们通常需要协同工作。当然，用户只熟知其中的某一种编程语言也无妨——即便是对\texttt{python}程序员而言，\texttt{hi-nginx}	也能提供非常高效的并发处理能力。
 
-目前，把\texttt{c}或者\texttt{c++}运用于\texttt{web}应用开发的最主要的方式是\texttt{script}加\texttt{c}或者\texttt{c++} \texttt{extension}。这样做的目的其实主要地还是为了解决\texttt{script}可能无法胜任“热点”业务的问题。首先是脚本，然后是\texttt{c}或者\texttt{c++} 扩展，最后再回到脚本。这条性能优化路线在\texttt{web}应用开发中极为常见。\texttt{hi-nginx}不仅支持这条路线——用户照样可以为\texttt{python}和\texttt{lua}开发\texttt{c}或\texttt{c++}扩展——而且还支持另一条路线，即直接用\texttt{c++}写\texttt{web application}。这条路线省去了“脱裤子”的麻烦；对于能写\texttt{c}或\texttt{c++}扩展的程序员而言，这是极为便利的。当然，如果用户仅仅能写脚本，\texttt{hi-nginx}也保证提供比已有的反向代理方案更强大的并发能力。
+目前，把\texttt{c}或者\texttt{c++}运用于\texttt{web}应用开发的最主要的方式是\texttt{script}加\texttt{c}或者\texttt{c++} \texttt{extension}。这样做的目的其实主要地还是为了解决\texttt{script}可能无法胜任“热点”业务的问题。首先是脚本，然后是\texttt{c}或者\texttt{c++} 扩展，最后再回到脚本。这条性能优化路线在\texttt{web}应用开发中极为常见。\texttt{hi-nginx}不仅支持这条路线——用户照样可以为\texttt{python}和\texttt{lua}以及\texttt{php}开发\texttt{c}或\texttt{c++}扩展——而且还支持另一条路线，即直接用\texttt{c++}写\texttt{web application}。这条路线省去了“脱裤子”的麻烦；对于能写\texttt{c}或\texttt{c++}扩展的程序员而言，这是极为便利的。当然，如果用户仅仅能写脚本，\texttt{hi-nginx}也保证提供比已有的反向代理方案更强大的并发能力。
 
 \texttt{hi-nginx}致力于增强用户的工作，而不是改变用户的工作。当用户不满意它时，用户可以安全地“回滚”至之前的工作状态，而不会产生任何损失。

@@ -1,10 +1,10 @@
 \section{起步}
 \subsection{hi-project}
-\texttt{hi-project}是一个辅助脚本，安装在\path	{/home/centos7/nginx/hi}目录中。它的用途是为用户创建“起步”代码模板。运行它可以使用三个选项，依次是：
+\texttt{hi-project}是一个辅助脚本，安装在\path	{/usr/local/nginx/hi}目录中。它的用途是为用户创建“起步”代码模板。运行它可以使用三个选项，依次是：
 \begin{itemize}
 \item 工程名，可选，默认\texttt{demo}
 \item 工程类型，可选，支持\texttt{cpp}，\texttt{python}，\texttt{lua}和\texttt{java}，默认\texttt{cpp}
-\item \texttt{hi-nginx}安装路径，可选，默认\path{/home/centos7/nginx}
+\item \texttt{hi-nginx}安装路径，可选，默认\path{/usr/local/nginx}
 \end{itemize}
 用户可以通过\texttt{-h}或者\texttt{--help}参看使用说明。
 
@@ -15,7 +15,7 @@
 \subsubsection{cpp}
 使用\texttt{hi-project}脚本创建一个\texttt{cpp}工程，名为\texttt{hello}：
 \begin{lstlisting}
-/home/centos7/nginx/hi/hi-project hello cpp /home/centos7/nginx
+/home/centos7/nginx/hi/hi-project hello cpp /usr/local/nginx
 \end{lstlisting}
 后面两个参数是可省的。
 这时，\texttt{hi-project}会创建一个名为\path{hello}的目录，并在该目录中创建两个文件，一个是\path{Makefile}，一个是\path{hello.cpp}。前者帮助用户在执行\texttt{make \&\& make install }时把\texttt{web application}编译、安装至正确位置；后者则帮助用户正确创建合乎\texttt{hi-nginx}要求的\texttt{class}：
@@ -47,7 +47,7 @@ extern "C" void destroy(hi::servlet* p) {
 \end{lstlisting}
 以上代码一目了然，无需过多解释，任何熟知\texttt{c++}的程序员都能看懂。没错，\texttt{hi-nginx}并不要求\texttt{cpp}程序员“精通”自己的工具，只需熟知即可。当然，熟知\texttt{http}协议是必要的，否则很难正确地使用\texttt{request}类和\texttt{response}类。如何使用这两个类，下文会详述。在此先按下不表。
 
-用户\texttt{make \&\& make install}之后，\texttt{hi-project}后把编译生成的\path{hello.so}安装在\path{/home/centos7/nginx/hi}目录下。要启用这个\texttt{web application}，只需在\texttt{hi-nginx}的配置文件中加入：
+用户\texttt{make \&\& make install}之后，\texttt{hi-project}后把编译生成的\path{hello.so}安装在\path{/usr/local/nginx/hi}目录下。要启用这个\texttt{web application}，只需在\texttt{hi-nginx}的配置文件中加入：
 \begin{lstlisting}
 location = /hello {
 	hi hi/hello.so;
@@ -79,6 +79,19 @@ hi_res:status(200)
 hi_res:content('hello,lua')
 \end{lstlisting}
 用户可以把其他\texttt{lua}类型的\texttt{web}应用全放在\path{lua}目录下，它们都能被正确安装。
+
+\subsubsection{php}
+使用\texttt{hi-project}脚本创建一个\texttt{php}工程，名为\texttt{php}：
+\begin{lstlisting}
+/home/centos7/nginx/hi/hi-project phphello php /home/centos7/nginx
+\end{lstlisting}
+最后一个参数是可省的。\texttt{hi-project}会创建一个名为\path{lua}的目录，并在该目录中创建两个文件，一个是\path{Makefile}，一个是\path{lua.lua}。前者的作用如上。后者很简单：
+\begin{lstlisting}
+hi_res:status(200)
+hi_res:content('hello,lua')
+\end{lstlisting}
+用户可以把其他\texttt{lua}类型的\texttt{web}应用全放在\path{lua}目录下，它们都能被正确安装。
+
 
 \subsubsection{java}
 使用\texttt{hi-project}脚本创建一个\texttt{jhello}工程，名为\texttt{jhello}：
@@ -226,13 +239,18 @@ hi_java_classpath "-Djava.class.path=.:/home/centos7/nginx/java:/home/centos7/ng
 \subsubsection{hi_java_servlet_cache_size}
 这个指令可指定\texttt{servlet}缓存容器大小。
 \subsubsection{hi_java_version}
-这个指令可指定虚拟机版本，默认是8，即\texttt{java}8。可以指定6,即\texttt{java}6。
+这个指令可指定虚拟机版本，默认是9，即\texttt{java}9。可以指定8,即\texttt{java}8。
 \subsubsection{hi_java_servlet}
 这个指令负责调用\texttt{servlet}类。比如，
 \begin{lstlisting}
 hi_java_servlet  hi/jhello;
 \end{lstlisting}
 它表示调用的是\texttt{hi-nginx}安装目录下的\path{java/hi/jhello.class}。
+
+\subsubsection{hi_php_script}
+这个指令负责运行\texttt{php}脚本，它接受一个参数，可指定查找脚本的目录。脚本应该实现php servlet类。详见\path{contrib/php}。
+
+
 
 
 
