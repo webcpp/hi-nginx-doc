@@ -1,7 +1,11 @@
 \section{分支版本}
-\texttt{hi-nginx}有两个分支版本：
+\texttt{hi-nginx}有多个分支版本：
 \begin{itemize}
-\item \texttt{hi-tengine} ，\url{https://github.com/webcpp/hi-tengine}
-\item \texttt{hi-openresty}，\url{https://github.com/webcpp/hi-openresty}
+\item master 全功能，lua语言使用lua官方版
+\item master-luajit 全功能，lua语言使用luajit版
+\item only-cpp 仅支持cpp语言
+\item only-python 仅支持cpp和python语言
+\item only-php 仅支持cpp和php语言
+\item no-java 不支持java语言，其他语言均支持
 \end{itemize}
-这两个版本分别建立在\texttt{tengine}和\texttt{openresty}之上，用法与\texttt{hi-nginx}完全相同。\footnote{这两个分支已经没有必要，请不要使用！}
+用户可根据需要\texttt{git checkout}。

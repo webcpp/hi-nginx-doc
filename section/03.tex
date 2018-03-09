@@ -2,10 +2,16 @@
 \texttt{hi-nginx}目前集成了一些常用的第三方模块。包括：
 \begin{itemize}
 \item array-var-nginx-module
+\item echo-nginx-module
 \item form-input-nginx-module
 \item headers-more-nginx-module
 \item iconv-nginx-module
 \item memc-nginx-module
+\item nchan
+\item nginx-http-concat
+\item nginx-push-stream-module
+\item nginx-rtmp-module
+\item nginx-upload-module
 \item ngx_coolkit
 \item ngx_devel_kit
 \item rds-csv-nginx-module
@@ -14,41 +20,10 @@
 \item set-misc-nginx-module
 \item srcache-nginx-module
 \item xss-nginx-module
-\item nginx-http-concat
-\item nginx-push-stream-module
-\item nginx-rtmp-module
-\item nchan
-\item echo-nginx-module
-\item nginx-upload-module
 \end{itemize}
-它们都放在\path{3rd}目录中，需要时，只需\texttt{--add-module=3rd/xxx}即可。例如：
-\begin{lstlisting}
-#!/bin/bash
-./configure     --with-http_ssl_module \
-                --with-http_v2_module \
-                --prefix=/home/centos7/nginx \
-                --add-module=ngx_http_hi_module  \
-                --add-module=3rd/ngx_devel_kit-0.3.0 \
-                --add-module=3rd/nginx-http-concat-1.2.2 \
-                --add-module=3rd/echo-nginx-module-0.60 \
-                --add-module=3rd/array-var-nginx-module-0.05 \
-                --add-module=3rd/form-input-nginx-module-0.12  \
-                --add-module=3rd/headers-more-nginx-module-0.32 \
-                --add-module=3rd/iconv-nginx-module-0.14 \
-                --add-module=3rd/memc-nginx-module-0.18 \
-                --add-module=3rd/ngx_coolkit-0.2rc3 \
-                --add-module=3rd/rds-csv-nginx-module-0.07 \
-                --add-module=3rd/rds-json-nginx-module-0.14 \
-                --add-module=3rd/redis2-nginx-module-0.14 \
-                --add-module=3rd/set-misc-nginx-module-0.31 \
-                --add-module=3rd/srcache-nginx-module-0.31 \
-                --add-module=3rd/xss-nginx-module-0.05 \
-                --add-module=3rd/nginx-push-stream-module-0.5.2 \
-                --add-module=3rd/nchan-1.1.6 \
-                --add-module=3rd/nginx-rtmp-module-1.1.7.10 \
-                --add-module=3rd/nginx-upload-module-2.255
-\end{lstlisting}
-如果用户有需要集成的其他模块，最好也放在\path{3rd}目录中，便于统一管理。然后，接着上面的配置脚本，\texttt{--add-module=3rd/xxx}，依样画葫芦即可。
+它们都放在\path{3rd}目录中，需要时，只需\texttt{--add-module=3rd/xxx}即可。
+
+如果用户有需要集成的其他模块，最好也放在\path{3rd}目录中，便于统一管理。然后，依样画葫芦即可。
 
 \section{模块开发}
 一般而言，\texttt{nginx}模块开发以\texttt{c}语言为基础。但是，对\texttt{hi-nginx}而言，\texttt{c}和\texttt{c++}都是完全支持的。\texttt{hi-nginx}本身即以\texttt{c++}模块\texttt{ngx_http_hi_module}为基础，它可以作为用户使用\texttt{c++}为\texttt{hi-nginx}开发自定义模块的范例演示。
